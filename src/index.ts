@@ -1,6 +1,5 @@
 import "@k2oss/k2-broker-core";
 import * as CONST from "./Constants.ts";
-import "./fetch"
 
 metadata = {
   systemName: "googledriveJSSPbroker",
