@@ -62,8 +62,8 @@ class XHR {
       body: payload,
       strictSSL: false,
     };
-    console.log("URL: " + options.method + " " + options.url);
-    console.log("BODY: " + options.body);
+    console.debug("URL: " + options.method + " " + options.url);
+    console.debug("BODY: " + options.body);
     let promise = new Promise((resolve, reject) => {
       try {
         request(options, (error, res, body) => {
@@ -91,9 +91,13 @@ class XHR {
 mock("XMLHttpRequest", XHR);
 
 test("execute passes", async (t) => {
-  let x = await axios("https://jsonplaceholder.typicode.com/todos/");
-  t.plan(1);
-  t.is(x, "a");
-
-  t.pass();
+  let x = await axios({
+    url: "https://jsonplaceholder.typicode.com/todos/198",
+    method: "get",
+    withCredentials: true,
+  });
+  t.plan(3);
+  t.is(x.data.id, 198);
+  t.is(x.data.userId, 10);
+  t.is(x.data.title, "quis eius est sint explicabo");
 });
