@@ -15,3 +15,18 @@ test("execute passes", async (t) => {
   t.is(x.data.userId, 10);
   t.is(x.data.title, "quis eius est sint explicabo");
 });
+
+test("Execute something in real broker", async (t) => {
+  await Promise.resolve<void>(
+    onexecute({
+      objectName: "File",
+      methodName: "getInfo",
+      parameters: undefined,
+      properties: undefined,
+      configuration: undefined,
+      schema: undefined,
+    })
+  );
+  t.plan(1);
+  t.is(typeof result.data, "string");
+});

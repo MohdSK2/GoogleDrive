@@ -1,5 +1,6 @@
 import "@k2oss/k2-broker-core";
 import * as CONST from "./Constants.ts";
+import axios from "axios";
 
 metadata = {
   systemName: "googledriveJSSPbroker",
@@ -36,12 +37,15 @@ async function onexecuteFile(
   switch (methodName) {
     case "getInfo":
       return new Promise<void>((resolve, reject) => {
-        fetch("https://www.google.com").then(function (data) {
+        axios({
+          url: "https://www.google.com",
+          method: "get",
+        }).then(function (x) {
           postResult({
-            path: data,
+            path: x.data,
           });
+          resolve();
         });
-        resolve();
       });
 
       break;
