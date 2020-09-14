@@ -58,8 +58,8 @@ class XHR {
       body: payload,
       strictSSL: false,
     };
-    console.debug("URL: " + options.method + " " + options.url);
-    console.debug("BODY: " + options.body);
+    console.log("URL: " + options.method + " " + options.url);
+    console.log("BODY: " + options.body);
     let promise = new Promise((resolve, reject) => {
       try {
         request(options, (error, res, body) => {

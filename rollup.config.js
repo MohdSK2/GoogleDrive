@@ -76,7 +76,8 @@ function buildTestConfig(inputFile) {
 }
 
 export default [
-  buildConfig("src/index.ts"),
+  //buildConfig("src/index.ts"),
+  buildTestConfig("src/index.ts"),
   buildTestConfig("src/testsetup.ts"),
   buildTestConfig("src/test.ts"),
 ];

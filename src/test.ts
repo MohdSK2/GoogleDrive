@@ -1,19 +1,15 @@
 import test from "ava";
 import "@k2oss/k2-broker-core/test-framework";
-import "./index";
-import axios from "axios";
 import "./testsetup";
+import "./index";
 
 test("execute passes", async (t) => {
-  let x = await axios({
-    url: "https://jsonplaceholder.typicode.com/todos/198",
-    method: "get",
-    withCredentials: true,
-  });
+  let x = await fetch_get("https://jsonplaceholder.typicode.com/todos/192");
+  let y = JSON.parse(x);
   t.plan(3);
-  t.is(x.data.id, 198);
-  t.is(x.data.userId, 10);
-  t.is(x.data.title, "quis eius est sint explicabo");
+  t.is(y.id, 198);
+  t.is(y.userId, 10);
+  t.is(y.title, "quis eius est sint explicabo");
 });
 
 test("Execute something in real broker", async (t) => {
@@ -28,5 +24,5 @@ test("Execute something in real broker", async (t) => {
     })
   );
   t.plan(1);
-  t.is(typeof result.data, "string");
+  t.is(result.path, "blaa");
 });
