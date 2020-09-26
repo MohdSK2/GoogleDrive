@@ -10,7 +10,7 @@ const devBuild = process.env.NODE_ENV === "development";
 
 function getOutputFile(inputFile) {
   const inputFileIndex = inputFile.lastIndexOf(".");
-  const outputFile =
+  let outputFile =
     (inputFileIndex >= 0 ? inputFile.substr(0, inputFileIndex) : inputFile) +
     ".js";
   return outputFile.startsWith("src/") ? outputFile.substr(4) : outputFile;
@@ -22,7 +22,7 @@ function buildConfig(inputFile) {
   const runtimeHelpers = true;
 
   const plugins = [
-    resolve(),
+    resolve({ extensions }),
     commonjs(),
     replace({ BUILD_ENV, "process.env.NODE_ENV": BUILD_ENV }),
     json(),
@@ -51,7 +51,7 @@ function buildTestConfig(inputFile) {
   const runtimeHelpers = true;
 
   const plugins = [
-    resolve(),
+    resolve({ extensions }),
     commonjs(),
     replace({ BUILD_ENV, "process.env.NODE_ENV": BUILD_ENV }),
     json(),
@@ -71,13 +71,20 @@ function buildTestConfig(inputFile) {
       format: "cjs",
       sourcemap: true,
     },
+
     plugins,
   };
 }
 
 export default [
-  //buildConfig("src/index.ts"),
-  buildTestConfig("src/index.ts"),
-  buildTestConfig("src/testsetup.ts"),
+  buildTestConfig("src/fetch.ts"),
+  buildTestConfig("src/Constants.ts"),
+  buildConfig("src/index.ts"),
+
+  //buildTestConfig("src/index.ts"),
   buildTestConfig("src/test.ts"),
+
+  // buildConfig("src/fetch.ts"),
+  // buildConfig("src/Constants.ts"),
+  // buildConfig("src/test.ts"),
 ];

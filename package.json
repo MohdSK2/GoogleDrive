@@ -23,7 +23,7 @@
     "build:bundle-dev": "node node_modules/rollup/dist/bin/rollup -c --environment NODE_ENV:development",
     "build:bundle-prod": "node node_modules/rollup/dist/bin/rollup -c --environment NODE_ENV:production",
     "watch": "node node_modules/rollup/dist/bin/rollup -c --watch --environment NODE_ENV:development",
-    "run-tests": "nyc ava",
+    "run-tests": "nyc ava --verbose",
     "test": "npm run build && npm run run-tests",
     "test:dev": "npm run build:dev && npm run run-tests"
   },
@@ -64,6 +64,7 @@
     "request": "^2.88.2",
     "rollup": "^1.30.1",
     "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-terser": "^5.2.0"
   }
 }
