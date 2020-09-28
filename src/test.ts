@@ -81,7 +81,7 @@ class XHR {
 
 mock("XMLHttpRequest", XHR);
 
-test("Retrieve a TODO", async (t) => {
+test("fetch_get - Succesful result against online TODO's", async (t) => {
   let x = await fetch_get("https://jsonplaceholder.typicode.com/todos/198");
   let y = JSON.parse(x);
   t.plan(3);
@@ -90,7 +90,7 @@ test("Retrieve a TODO", async (t) => {
   t.is(y.title, "quis eius est sint explicabo");
 });
 
-test("404 failure", async (t) => {
+test("fetch_get - 404 failure", async (t) => {
   let x = fetch_get("https://google.com/404");
   return x
     .then((result) => {
@@ -102,7 +102,7 @@ test("404 failure", async (t) => {
     });
 });
 
-test("describe returns the hardcoded instance", async (t) => {
+test("Describe returns the hardcoded instance", async (t) => {
   let schema = null;
   mock("postSchema", function (r: any) {
     schema = r;

@@ -62,6 +62,16 @@ const FileMethods = {
   deleteTag: "deleteTag",
 };
 
+const DriveMethods = {
+  getDrives: "GetDrives",
+};
+
+const DriveProperties = {
+  id: "id",
+  name: "name",
+  hidden: "hidden",
+};
+
 const FolderProperties = {
   id: "id",
   name: "foldername",
@@ -78,6 +88,40 @@ const FolderProperties = {
 };
 export const ServiceObjectDefinitions = {
   objects: {
+    Drive: {
+      displayName: "Drive",
+      description: "Operations related to a Google (Shared) Drive",
+      properties: {
+        [DriveProperties.id]: {
+          displayName: "Drive Id",
+          description:
+            "The ID of this shared drive which is also the ID of the top level folder of this shared drive.",
+          type: PropertyTypes.STRING,
+        },
+        [DriveProperties.name]: {
+          displayName: "Name",
+          description: "The name of this shared drive.",
+          type: PropertyTypes.STRING,
+        },
+        [DriveProperties.hidden]: {
+          displayName: "Hidden",
+          description: "Whether the shared drive is hidden from default view..",
+          type: PropertyTypes.STRING,
+        },
+      },
+      methods: {
+        [DriveMethods.getDrives]: {
+          displayName: "Get Drives",
+          description: "Get all Google (shared) drives.",
+          type: MethodTypes.LIST,
+          outputs: [
+            DriveProperties.id,
+            DriveProperties.name,
+            DriveProperties.hidden,
+          ],
+        },
+      },
+    },
     Folder: {
       displayName: "Folder",
       description: "Operations related to a folder in Google Drive",
