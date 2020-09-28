@@ -1,5 +1,6 @@
 import "@k2oss/k2-broker-core";
-import { onexecuteFile } from "./FileServiceObject";
+import { executeFile } from "./FileServiceObject";
+import { executeDrive } from "./DriveServiceObject";
 import { ServiceObjectDefinitions } from "./ServiceObjects";
 
 metadata = {
@@ -22,7 +23,10 @@ onexecute = async function ({
 }): Promise<void> {
   switch (objectName) {
     case "File":
-      await onexecuteFile(methodName, properties, parameters);
+      await executeFile(methodName, properties, parameters);
+      break;
+    case "Drive":
+      await executeDrive(methodName, properties, parameters);
       break;
     default:
       throw new Error("The object " + objectName + " is not supported.");

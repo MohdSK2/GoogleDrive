@@ -29,7 +29,7 @@ const MethodTypes = {
   DELETE: "delete",
 };
 
-const FileProperties = {
+export const FileProperties = {
   id: "id",
   name: "filename",
   size: "size",
@@ -46,12 +46,12 @@ const FileProperties = {
   totrash: "totrash",
 };
 
-const FolderMethods = {
+export const FolderMethods = {
   getInfo: "getinfo",
   getList: "getlist",
 };
 
-const FileMethods = {
+export const FileMethods = {
   getInfo: "getinfo",
   download: "download",
   copy: "copy",
@@ -62,17 +62,16 @@ const FileMethods = {
   deleteTag: "deleteTag",
 };
 
-const DriveMethods = {
+export const DriveMethods = {
   getDrives: "GetDrives",
 };
 
-const DriveProperties = {
+export const DriveProperties = {
   id: "id",
   name: "name",
-  hidden: "hidden",
 };
 
-const FolderProperties = {
+export const FolderProperties = {
   id: "id",
   name: "foldername",
   url: "URL",
@@ -86,6 +85,7 @@ const FolderProperties = {
   targetid: "targetid",
   totrash: "totrash",
 };
+
 export const ServiceObjectDefinitions = {
   objects: {
     Drive: {
@@ -103,22 +103,13 @@ export const ServiceObjectDefinitions = {
           description: "The name of this shared drive.",
           type: PropertyTypes.STRING,
         },
-        [DriveProperties.hidden]: {
-          displayName: "Hidden",
-          description: "Whether the shared drive is hidden from default view..",
-          type: PropertyTypes.STRING,
-        },
       },
       methods: {
         [DriveMethods.getDrives]: {
           displayName: "Get Drives",
           description: "Get all Google (shared) drives.",
           type: MethodTypes.LIST,
-          outputs: [
-            DriveProperties.id,
-            DriveProperties.name,
-            DriveProperties.hidden,
-          ],
+          outputs: [DriveProperties.id, DriveProperties.name],
         },
       },
     },

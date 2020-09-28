@@ -1,4 +1,7 @@
-export async function fetch_get(url: string): Promise<string> {
+export async function fetch_get(
+  url: string,
+  queryString?: any
+): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -6,7 +9,6 @@ export async function fetch_get(url: string): Promise<string> {
         if (xhr.readyState !== 4) {
           return;
         }
-        console.log(`FETCH_GET - xhr status: ${xhr.status}`);
         if (xhr.status !== 200) {
           throw new Error(`FETCH_GET - Failed with status ${xhr.status}`);
         }
@@ -22,8 +24,21 @@ export async function fetch_get(url: string): Promise<string> {
       console.log(`FETCH_GET - onError occured`);
       throw new Error(`FETCH_GET - onError occured`);
     };
+
+    // This can probably be better
+    if (queryString) {
+      let query = "?";
+      for (let key in queryString) {
+        let name = encodeURIComponent(key);
+        let value = encodeURIComponent(queryString[key]);
+        query += name + "=" + value + "&";
+      }
+      url = url + query;
+    }
+    console.log("FETCH_GET URL: " + url);
+
     xhr.open("GET", url);
-    //xhr.withCredentials = true;
+    xhr.withCredentials = true;
     //xhr.setRequestHeader("Accept", "*/*");
     //xhr.setRequestHeader("Accept-Encoding", "gzip, deflate, br");
 
