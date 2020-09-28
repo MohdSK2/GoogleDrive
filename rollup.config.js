@@ -78,7 +78,7 @@ function buildTestConfig(inputFile) {
 
 export default [
   buildTestConfig("src/fetch.ts"),
-  buildTestConfig("src/Constants.ts"),
+  buildTestConfig("src/ServiceObjects.ts"),
   buildTestConfig("src/FileServiceObject.ts"),
   buildConfig("src/index.ts"),
 

@@ -1,4 +1,7 @@
-export const PropertyTypes = {
+// Because we want to seperate out this content into a seperate file, we need to redefine the simple things like PropertyType.
+// The K2-OSS lib doesn't expose them in a way that we can just use them anywhere.
+
+const PropertyTypes = {
   STRING: "string",
   BOOL: "boolean",
   DATETIME: "dateTime",
@@ -17,7 +20,7 @@ export const PropertyTypes = {
   XML: "extendedString",
 };
 
-export const MethodTypes = {
+const MethodTypes = {
   LIST: "list",
   READ: "read",
   CREATE: "create",
@@ -26,7 +29,7 @@ export const MethodTypes = {
   DELETE: "delete",
 };
 
-export const FileProperties = {
+const FileProperties = {
   id: "id",
   name: "filename",
   path: "path",
@@ -43,7 +46,7 @@ export const FileProperties = {
   tagValue: "tagValue",
 };
 
-export const FileMethods = {
+const FileMethods = {
   getInfo: "getInfo",
   getInfoById: "getInfoById",
   getShareUrl: "getShareUrl",

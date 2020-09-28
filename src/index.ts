@@ -1,6 +1,6 @@
 import "@k2oss/k2-broker-core";
 import { onexecuteFile } from "./FileServiceObject";
-import { ServiceObjectDefinitions } from "./Constants";
+import { ServiceObjectDefinitions } from "./ServiceObjects";
 
 metadata = {
   systemName: "googledriveJSSPbroker",

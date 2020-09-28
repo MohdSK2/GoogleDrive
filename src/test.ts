@@ -1,7 +1,7 @@
 import test from "ava";
 import "@k2oss/k2-broker-core/test-framework";
 import { fetch_get } from "./fetch";
-import { ServiceObjectDefinitions } from "./Constants";
+import { ServiceObjectDefinitions } from "./ServiceObjects";
 import "./index";
 
 // TODO: need to find a way to read/get this value for oauth setups.
