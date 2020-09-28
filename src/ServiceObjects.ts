@@ -173,7 +173,7 @@ export const ServiceObjectDefinitions = {
             FileProperties.fileContent,
           ],
         },
-        [FileMethods.copy]: {
+        /*[FileMethods.copy]: {
           displayName: "Copy File",
           description: "Copy a file to a folder. Returns the new file details.",
           inputs: [FileProperties.sourceId, FileProperties.targetid],
@@ -189,7 +189,7 @@ export const ServiceObjectDefinitions = {
             FileProperties.createdDate,
             FileProperties.url,
           ],
-        },
+        },*/
         [FileMethods.delete]: {
           displayName: "Delete File",
           description: "Delete a file.",
@@ -199,7 +199,7 @@ export const ServiceObjectDefinitions = {
           requiredInputs: [FileProperties.id],
           outputs: [],
         },
-        [FileMethods.move]: {
+        /* [FileMethods.move]: {
           displayName: "Move File",
           description: "Move a file to the specified folder id.",
 
@@ -216,7 +216,7 @@ export const ServiceObjectDefinitions = {
             FileProperties.createdDate,
             FileProperties.url,
           ],
-        },
+        },*/
         [FileMethods.upload]: {
           displayName: "Upload File",
           description: "Upload a File",
@@ -235,7 +235,7 @@ export const ServiceObjectDefinitions = {
             FileProperties.url,
           ],
         },
-        [FileMethods.updateTag]: {
+        /* [FileMethods.updateTag]: {
           displayName: "Update Tag",
           description: "Update/add a tag to a file.",
           inputs: [
@@ -262,8 +262,9 @@ export const ServiceObjectDefinitions = {
         },
 
         [FileMethods.deleteTag]: {
-          displayName: "Delete a Tag",
-          description: "Delete one specific tag from a file.",
+          displayName: "Delete Tag",
+          description:
+            "Delete one specific tag from a file. Does not provide an error message if the tag does not exist.",
           inputs: [FileProperties.id, FileProperties.tagName],
           requiredInputs: [FileProperties.id, FileProperties.tagName],
           type: MethodTypes.DELETE,
@@ -277,7 +278,7 @@ export const ServiceObjectDefinitions = {
             FileProperties.createdDate,
             FileProperties.url,
           ],
-        },
+        },*/
       },
     },
   },
