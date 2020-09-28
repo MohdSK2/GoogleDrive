@@ -81,11 +81,5 @@ export default [
   buildTestConfig("src/ServiceObjects.ts"),
   buildTestConfig("src/FileServiceObject.ts"),
   buildConfig("src/index.ts"),
-
-  //buildTestConfig("src/index.ts"),
   buildTestConfig("src/test.ts"),
-
-  // buildConfig("src/fetch.ts"),
-  // buildConfig("src/Constants.ts"),
-  // buildConfig("src/test.ts"),
 ];
