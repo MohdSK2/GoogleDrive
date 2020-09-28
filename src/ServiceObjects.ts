@@ -46,6 +46,11 @@ const FileProperties = {
   totrash: "totrash",
 };
 
+const FolderMethods = {
+  getInfo: "getinfo",
+  getList: "getlist",
+};
+
 const FileMethods = {
   getInfo: "getinfo",
   download: "download",
@@ -57,8 +62,96 @@ const FileMethods = {
   deleteTag: "deleteTag",
 };
 
+const FolderProperties = {
+  id: "id",
+  name: "foldername",
+  url: "URL",
+  modifiedDate: "modifiedDateTime",
+  createdDate: "CreatedDateTime",
+  parentId: "ParentId",
+  tags: "tags",
+  tagName: "tagName",
+  tagValue: "tagValue",
+  sourceId: "sourceid",
+  targetid: "targetid",
+  totrash: "totrash",
+};
 export const ServiceObjectDefinitions = {
   objects: {
+    Folder: {
+      displayName: "Folder",
+      description: "Operations related to a folder in Google Drive",
+      properties: {
+        [FolderProperties.id]: {
+          displayName: "Folder Id",
+          description: "The unique ID of a folder (or drive).",
+          type: PropertyTypes.STRING,
+        },
+        [FolderProperties.name]: {
+          displayName: "Folder Name",
+          description: "The folder name.",
+          type: PropertyTypes.STRING,
+        },
+        [FolderProperties.url]: {
+          displayName: "URL",
+          description: "Direct URL to the folder.",
+          type: PropertyTypes.HYPERLINK, // TODO: does that work?
+        },
+        [FolderProperties.modifiedDate]: {
+          displayName: "Modified DateTime",
+          description: "Date/Time on which the folder was last modified.",
+          type: PropertyTypes.DATETIME,
+        },
+        [FolderProperties.createdDate]: {
+          displayName: "Created DateTime",
+          description: "Date on which teh folder was created Date",
+          type: PropertyTypes.DATETIME,
+        },
+        [FolderProperties.parentId]: {
+          displayName: "Parent ID",
+          description: "ID of the parent object/folder.",
+          type: PropertyTypes.STRING,
+        },
+        [FolderProperties.tags]: {
+          displayName: "Tags",
+          description: "JSON of all tags associated with the folder.",
+          type: PropertyTypes.STRING,
+        },
+      },
+      methods: {
+        [FileMethods.getInfo]: {
+          displayName: "Get Info",
+          description: "Get info for the folder by it's ID.",
+          type: MethodTypes.READ,
+          inputs: [FolderProperties.id],
+          requiredInputs: [FolderProperties.id],
+          outputs: [
+            FolderProperties.id,
+            FolderProperties.name,
+            FolderProperties.parentId,
+            FolderProperties.tags,
+            FolderProperties.modifiedDate,
+            FolderProperties.createdDate,
+            FolderProperties.url,
+          ],
+        },
+        [FolderMethods.getList]: {
+          displayName: "Get List",
+          description: "Get List of all items in a folder.",
+          type: MethodTypes.LIST,
+          inputs: [FolderProperties.id],
+          requiredInputs: [FolderProperties.id],
+          outputs: [
+            FolderProperties.id,
+            FolderProperties.name,
+            FolderProperties.tags,
+            FolderProperties.modifiedDate,
+            FolderProperties.createdDate,
+            FolderProperties.url,
+          ],
+        },
+      },
+    },
     File: {
       displayName: "File",
       description: "Operations related to a single file in Google Drive",
@@ -140,7 +233,7 @@ export const ServiceObjectDefinitions = {
       methods: {
         [FileMethods.getInfo]: {
           displayName: "Get Info",
-          description: "Get info for the file by a given path.",
+          description: "Get info for the file by a given ID.",
           type: MethodTypes.READ,
           inputs: [FileProperties.id],
           requiredInputs: [FileProperties.id],
