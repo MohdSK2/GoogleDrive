@@ -1,6 +1,7 @@
 import test from "ava";
 import "@k2oss/k2-broker-core/test-framework";
 import { fetch_get } from "./fetch";
+import { ServiceObjectDefinitions } from "./Constants";
 import "./index";
 
 // TODO: need to find a way to read/get this value for oauth setups.
@@ -10,15 +11,8 @@ function mock(name: string, value: any) {
   global[name] = value;
 }
 
-let schema = null;
-mock("postSchema", function (result: any) {
-  schema = result;
-  console.log("postSchema:");
-  console.log(schema);
-});
-
 let result: any = null;
-mock("postResult", function pr(r: any) {
+mock("postResult", function (r: any) {
   result = r;
   console.log("postResult:");
   console.log(result);
@@ -106,6 +100,67 @@ test("404 failure", async (t) => {
       t.pass();
       console.log(err);
     });
+});
+
+test("describe returns the hardcoded instance", async (t) => {
+  let schema = null;
+  mock("postSchema", function (r: any) {
+    schema = r;
+  });
+
+  await Promise.resolve<void>(
+    ondescribe({
+      configuration: {},
+    })
+  );
+
+  t.deepEqual(schema, ServiceObjectDefinitions);
+  t.pass();
+});
+
+test("ServiceObject not supported", async (t) => {
+  let nonexistingServiceObject = "K2rocks";
+  let error = await t.throwsAsync(
+    Promise.resolve<void>(
+      onexecute({
+        objectName: nonexistingServiceObject,
+        methodName: "unused",
+        parameters: {},
+        properties: {},
+        configuration: {},
+        schema: {},
+      })
+    )
+  );
+
+  t.deepEqual(
+    error.message,
+    "The object " + nonexistingServiceObject + " is not supported."
+  );
+  t.pass();
+});
+
+test("File method not supported", async (t) => {
+  let nonexistingMethod = "SomeMethod";
+  let error = await t.throwsAsync(
+    Promise.resolve<void>(
+      onexecute({
+        objectName: "File",
+        methodName: nonexistingMethod,
+        parameters: {},
+        properties: {},
+        configuration: {},
+        schema: {},
+      })
+    )
+  );
+
+  t.deepEqual(
+    error.message,
+    "The method " + nonexistingMethod + " is not supported."
+  );
+
+  t.pass();
 });
 
 test("Execute something in real broker", async (t) => {
