@@ -4,8 +4,8 @@ import { fetch_get } from "./fetch";
 import { ServiceObjectDefinitions } from "./ServiceObjects";
 import "./index";
 
-// TODO: need to find a way to read/get this value for oauth setups.
-let OAuthToken = "xxx";
+//TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
+let OAuthToken = "ya29.AA";
 
 function mock(name: string, value: any) {
   global[name] = value;
@@ -40,7 +40,6 @@ class XHR {
 
   setRequestHeader(key: string, value: string) {
     this.recorder.headers[key] = value;
-    console.log("setRequestHeader: " + key + "=" + value);
   }
 
   send(payload) {
@@ -57,7 +56,6 @@ class XHR {
       strictSSL: false,
     };
     console.log("URL: " + options.method + " " + options.url);
-    console.log("BODY: " + options.body);
     try {
       request(options, (error, res, body) => {
         if (error) {
@@ -69,7 +67,6 @@ class XHR {
         this.responseText = body;
         this.readyState = 4;
         this.status = res.statusCode;
-        console.log("calling onreadystatechange");
         this.onreadystatechange();
         delete this.responseText;
       });
@@ -81,7 +78,7 @@ class XHR {
 
 mock("XMLHttpRequest", XHR);
 
-test("Retrieve a TODO", async (t) => {
+test("fetch_get - Succesful result against online TODO's", async (t) => {
   let x = await fetch_get("https://jsonplaceholder.typicode.com/todos/198");
   let y = JSON.parse(x);
   t.plan(3);
@@ -90,7 +87,7 @@ test("Retrieve a TODO", async (t) => {
   t.is(y.title, "quis eius est sint explicabo");
 });
 
-test("404 failure", async (t) => {
+test("fetch_get - 404 failure", async (t) => {
   let x = fetch_get("https://google.com/404");
   return x
     .then((result) => {
@@ -102,7 +99,7 @@ test("404 failure", async (t) => {
     });
 });
 
-test("describe returns the hardcoded instance", async (t) => {
+test("Describe returns the hardcoded instance", async (t) => {
   let schema = null;
   mock("postSchema", function (r: any) {
     schema = r;
@@ -163,16 +160,17 @@ test("File method not supported", async (t) => {
   t.pass();
 });
 
-test("Execute something in real broker", async (t) => {
+test("Execute Drive -> GetDrives", async (t) => {
   await onexecute({
-    objectName: "File",
-    methodName: "getInfo",
+    objectName: "Drive",
+    methodName: "GetDrives",
     parameters: undefined,
     properties: undefined,
     configuration: undefined,
     schema: undefined,
   });
 
-  t.plan(1);
-  t.is(result.id, 192);
+  t.plan(2);
+  t.assert(result.length >= 1);
+  t.assert(result.find((x) => (x.id = "root")) !== undefined);
 });

@@ -1,13 +1,14 @@
 import { fetch_get } from "./fetch";
 import "@k2oss/k2-broker-core";
+import { FileProperties, FileMethods } from "./ServiceObjects";
 
-export async function onexecuteFile(
+export async function executeFile(
   methodName: string,
   properties: SingleRecord,
   parameters: SingleRecord
 ) {
   switch (methodName) {
-    case "getInfo":
+    case FileMethods.getInfo:
       await getInfo();
       break;
     default:
@@ -17,8 +18,6 @@ export async function onexecuteFile(
 
 async function getInfo() {
   let x = await fetch_get("https://jsonplaceholder.typicode.com/todos/192");
-  console.log("OUTPUT");
-  console.log(x);
   let y = JSON.parse(x);
   postResult({
     id: y.id,
