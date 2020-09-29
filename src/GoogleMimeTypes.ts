@@ -1,3 +1,5 @@
+// These mimeTypes are defined on https://developers.google.com/drive/api/v3/mime-types
+// We list them here so we can refer to them as constants in our code.
 export const MimeTypes = {
   Audio: "application/vnd.google-apps.audio",
   GoogleDoc: "application/vnd.google-apps.document",
