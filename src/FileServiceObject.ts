@@ -1,5 +1,5 @@
-import { fetch_get } from "./fetch";
 import "@k2oss/k2-broker-core";
+import { fetch_get } from "./fetch";
 import { FileProperties, FileMethods } from "./ServiceObjects";
 
 export async function executeFile(

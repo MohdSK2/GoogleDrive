@@ -1,8 +1,8 @@
-import { fetch_get } from "./fetch";
 import "@k2oss/k2-broker-core";
+import { fetch_get } from "./fetch";
 import { FolderProperties, FolderMethods } from "./ServiceObjects";
 import { URLs } from "./URLs";
-import { MimeTypes, isFolder } from "./GoogleMimeTypes";
+import { isFolder } from "./GoogleMimeTypes";
 
 export async function executeFolder(
   methodName: string,
