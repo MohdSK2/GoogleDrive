@@ -6,15 +6,14 @@ export const MimeTypes = {
   GoogleDriveFile: "application/vnd.google-apps.file",
   GoogleDriveFolder: "application/vnd.google-apps.folder",
   GoogleForm: "application/vnd.google-apps.form",
-  /*  
-application/vnd.google-apps.fusiontable 	Google Fusion Tables
-application/vnd.google-apps.map 	Google My Maps
-application/vnd.google-apps.photo 	
-application/vnd.google-apps.presentation 	Google Slides
-application/vnd.google-apps.script 	Google Apps Scripts
-application/vnd.google-apps.shortcut 	Shortcut
-application/vnd.google-apps.site 	Google Sites
-application/vnd.google-apps.spreadsheet 	Google Sheets
-application/vnd.google-apps.unknown 	
-application/vnd.google-apps.video*/
+  GoogleFusionTables: "application/vnd.google-apps.fusiontable",
+  GoogleMyMaps: "application/vnd.google-apps.map",
+  GooglePhoto: "application/vnd.google-apps.photo",
+  GoogleSlides: "application/vnd.google-apps.presentation",
+  GoogleAppsScripts: "application/vnd.google-apps.script",
+  Shortcut: "application/vnd.google-apps.shortcut",
+  GoogleSite: "application/vnd.google-apps.site",
+  GoogleSheet: "application/vnd.google-apps.spreadsheet",
+  Unknown: "application/vnd.google-apps.unknown",
+  Video: "application/vnd.google-apps.video",
 };
