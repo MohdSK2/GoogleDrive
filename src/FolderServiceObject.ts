@@ -2,7 +2,7 @@ import { fetch_get } from "./fetch";
 import "@k2oss/k2-broker-core";
 import { FolderProperties, FolderMethods } from "./ServiceObjects";
 import { URLs } from "./URLs";
-import { MimeTypes } from "./GoogleMimeTypes";
+import { MimeTypes, isFolder } from "./GoogleMimeTypes";
 
 export async function executeFolder(
   methodName: string,
@@ -35,8 +35,7 @@ async function executeGetList(properties: SingleRecord) {
         [FolderProperties.tags]: x.properties,
         [FolderProperties.size]: x.size ? x.size : 0,
         [FolderProperties.istrashed]: x.trashed,
-        [FolderProperties.isdirectory]:
-          x.mimeType == MimeTypes.GoogleDriveFolder,
+        [FolderProperties.isdirectory]: isFolder(x.mimeType),
         [FolderProperties.mimetype]: x.mimeType,
         [FolderProperties.modifiedDate]: x.modifiedTime,
         [FolderProperties.createdDate]: x.createdTime,
