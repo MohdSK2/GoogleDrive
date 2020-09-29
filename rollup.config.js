@@ -81,6 +81,7 @@ export default [
   buildTestConfig("src/ServiceObjects.ts"),
   buildTestConfig("src/FileServiceObject.ts"),
   buildTestConfig("src/DriveServiceObject.ts"),
+  buildTestConfig("src/FolderServiceObject.ts"),
   buildConfig("src/index.ts"),
   buildTestConfig("src/test.ts"),
 ];

@@ -1,6 +1,7 @@
 import "@k2oss/k2-broker-core";
 import { executeFile } from "./FileServiceObject";
 import { executeDrive } from "./DriveServiceObject";
+import { executeFolder } from "./FolderServiceObject";
 import { ServiceObjectDefinitions } from "./ServiceObjects";
 
 metadata = {
@@ -27,6 +28,9 @@ onexecute = async function ({
       break;
     case "Drive":
       await executeDrive(methodName, properties, parameters);
+      break;
+    case "Folder":
+      await executeFolder(methodName, properties, parameters);
       break;
     default:
       throw new Error("The object " + objectName + " is not supported.");

@@ -79,10 +79,15 @@ export const FolderProperties = {
   createdDate: "CreatedDateTime",
   parentId: "ParentId",
   tags: "tags",
+  size: "size",
   tagName: "tagName",
   tagValue: "tagValue",
   sourceId: "sourceid",
   targetid: "targetid",
+  istrashed: "trashed",
+  description: "desc",
+  isdirectory: "dir",
+  mimetype: "mimetype",
   totrash: "totrash",
 };
 
@@ -116,30 +121,36 @@ export const ServiceObjectDefinitions = {
     Folder: {
       displayName: "Folder",
       description: "Operations related to a folder in Google Drive",
+      // Because the folder has the 'getlist' method it will be hshowing files and folders. This makes the properties a bit more generic.
       properties: {
         [FolderProperties.id]: {
-          displayName: "Folder Id",
+          displayName: "Id",
           description: "The unique ID of a folder (or drive).",
           type: PropertyTypes.STRING,
         },
         [FolderProperties.name]: {
-          displayName: "Folder Name",
-          description: "The folder name.",
+          displayName: "Name",
+          description: "The name of the item.",
           type: PropertyTypes.STRING,
+        },
+        [FolderProperties.description]: {
+          displayName: "Description",
+          description: "The description of the item.",
+          type: PropertyTypes.MEMO,
         },
         [FolderProperties.url]: {
           displayName: "URL",
-          description: "Direct URL to the folder.",
+          description: "Direct URL to the item.",
           type: PropertyTypes.HYPERLINK, // TODO: does that work?
         },
         [FolderProperties.modifiedDate]: {
           displayName: "Modified DateTime",
-          description: "Date/Time on which the folder was last modified.",
+          description: "Date/Time on which the item was last modified.",
           type: PropertyTypes.DATETIME,
         },
         [FolderProperties.createdDate]: {
           displayName: "Created DateTime",
-          description: "Date on which teh folder was created Date",
+          description: "Date on which the tiem was created Date",
           type: PropertyTypes.DATETIME,
         },
         [FolderProperties.parentId]: {
@@ -151,6 +162,26 @@ export const ServiceObjectDefinitions = {
           displayName: "Tags",
           description: "JSON of all tags associated with the folder.",
           type: PropertyTypes.STRING,
+        },
+        [FolderProperties.mimetype]: {
+          displayName: "MimeType",
+          description: "The mimetype of the item.",
+          type: PropertyTypes.STRING,
+        },
+        [FolderProperties.size]: {
+          displayName: "Size",
+          description: "Size of the item in google drive (bytes).",
+          type: PropertyTypes.NUMBER,
+        },
+        [FolderProperties.istrashed]: {
+          displayName: "Trashed",
+          description: "Weather the item is in the trash or not.",
+          type: PropertyTypes.BOOL,
+        },
+        [FolderProperties.isdirectory]: {
+          displayName: "Directory",
+          description: "Weather the item is a directory or not.",
+          type: PropertyTypes.BOOL,
         },
       },
       methods: {
@@ -165,6 +196,7 @@ export const ServiceObjectDefinitions = {
             FolderProperties.name,
             FolderProperties.parentId,
             FolderProperties.tags,
+            FolderProperties.size,
             FolderProperties.modifiedDate,
             FolderProperties.createdDate,
             FolderProperties.url,
@@ -179,7 +211,12 @@ export const ServiceObjectDefinitions = {
           outputs: [
             FolderProperties.id,
             FolderProperties.name,
+            FolderProperties.description,
             FolderProperties.tags,
+            FolderProperties.size,
+            FolderProperties.istrashed,
+            FolderProperties.isdirectory,
+            FolderProperties.mimetype,
             FolderProperties.modifiedDate,
             FolderProperties.createdDate,
             FolderProperties.url,

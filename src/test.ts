@@ -5,7 +5,8 @@ import { ServiceObjectDefinitions } from "./ServiceObjects";
 import "./index";
 
 //TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
-let OAuthToken = "ya29.AA";
+let OAuthToken =
+  "ya29.a0AfH6SMDsftts7HSE96ahoqUOdl-gNxDFljTQHNGNbBsm0bJfpWzu63f9Y6lUVxKfI5HcdULOp8DXjbz3CG_aV7xLG1rvZ78D5L6af9sakTafBFQhXVjKHWrh6OkYeOHnZl3KsFXqYLCQHbJrIJgNQSaa0t8vpSA0iyneQA";
 
 function mock(name: string, value: any) {
   global[name] = value;
@@ -137,12 +138,48 @@ test("ServiceObject not supported", async (t) => {
   t.pass();
 });
 
-test("File method not supported", async (t) => {
+test("Service Object method not supported", async (t) => {
   let nonexistingMethod = "SomeMethod";
   let error = await t.throwsAsync(
     Promise.resolve<void>(
       onexecute({
         objectName: "File",
+        methodName: nonexistingMethod,
+        parameters: {},
+        properties: {},
+        configuration: {},
+        schema: {},
+      })
+    )
+  );
+
+  t.deepEqual(
+    error.message,
+    "The method " + nonexistingMethod + " is not supported."
+  );
+
+  error = await t.throwsAsync(
+    Promise.resolve<void>(
+      onexecute({
+        objectName: "Drive",
+        methodName: nonexistingMethod,
+        parameters: {},
+        properties: {},
+        configuration: {},
+        schema: {},
+      })
+    )
+  );
+
+  t.deepEqual(
+    error.message,
+    "The method " + nonexistingMethod + " is not supported."
+  );
+
+  error = await t.throwsAsync(
+    Promise.resolve<void>(
+      onexecute({
+        objectName: "Folder",
         methodName: nonexistingMethod,
         parameters: {},
         properties: {},
@@ -173,4 +210,19 @@ test("Execute Drive -> GetDrives", async (t) => {
   t.plan(2);
   t.assert(result.length >= 1);
   t.assert(result.find((x) => (x.id = "root")) !== undefined);
+});
+
+test("Execute Folder -> GetList", async (t) => {
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getlist",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  t.plan(1);
+  t.assert(result.length >= 1);
+  console.log(result);
 });
