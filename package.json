@@ -23,7 +23,7 @@
     "build:bundle-dev": "node node_modules/rollup/dist/bin/rollup -c --environment NODE_ENV:development",
     "build:bundle-prod": "node node_modules/rollup/dist/bin/rollup -c --environment NODE_ENV:production",
     "watch": "node node_modules/rollup/dist/bin/rollup -c --watch --environment NODE_ENV:development",
-    "run-tests": "nyc ava --verbose",
+    "run-tests": "nyc ava",
     "test": "npm run build && npm run run-tests",
     "test:dev": "npm run build:dev && npm run run-tests"
   },
