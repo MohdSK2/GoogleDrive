@@ -19,13 +19,3 @@ export const MimeTypes = {
   Unknown: "application/vnd.google-apps.unknown",
   Video: "application/vnd.google-apps.video",
 };
-
-export function isFolder(mimeType: string) {
-  if (mimeType === undefined) {
-    return false;
-  }
-  if (mimeType === MimeTypes.GoogleDriveFolder) {
-    return true;
-  }
-  return false;
-}

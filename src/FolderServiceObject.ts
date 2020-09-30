@@ -3,7 +3,7 @@ import { fetch_get } from "./fetch";
 import { getBoolean } from "./helpers";
 import { FolderProperties, FolderMethods } from "./ServiceObjects";
 import { URLs } from "./URLs";
-import { isFolder } from "./GoogleMimeTypes";
+import { isFolder } from "./helpers";
 
 export async function executeFolder(
   methodName: string,

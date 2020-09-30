@@ -3,6 +3,8 @@ import "@k2oss/k2-broker-core/test-framework";
 import { fetch_get } from "./fetch";
 import { ServiceObjectDefinitions } from "./ServiceObjects";
 import "./index";
+import { getBoolean, isFolder } from "./helpers";
+import { MimeTypes } from "./GoogleMimeTypes";
 
 //TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
 let OAuthToken =
@@ -98,6 +100,21 @@ test("fetch_get - 404 failure", async (t) => {
       t.pass();
       console.log(err);
     });
+});
+
+test("Helper -> getBoolean", async (t) => {
+  t.is(getBoolean(1), true);
+  t.is(getBoolean("yes"), true);
+  t.is(getBoolean("true"), true);
+  t.is(getBoolean("1"), true);
+  t.is(getBoolean(0), false);
+  t.is(getBoolean("0"), false);
+});
+
+test("Helper -> isFolder", async (t) => {
+  t.is(isFolder(undefined), false);
+  t.is(isFolder(MimeTypes.GoogleDriveFolder), true);
+  t.is(isFolder(MimeTypes.GoogleDriveFile), false);
 });
 
 test("Describe returns the hardcoded instance", async (t) => {
