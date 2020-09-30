@@ -1,5 +1,6 @@
 import "@k2oss/k2-broker-core";
 import { fetch_get } from "./fetch";
+import { getBoolean } from "./helpers";
 import { FolderProperties, FolderMethods } from "./ServiceObjects";
 import { URLs } from "./URLs";
 import { isFolder } from "./GoogleMimeTypes";
