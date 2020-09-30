@@ -3,11 +3,7 @@ import { fetch_get } from "./fetch";
 import { DriveMethods, DriveProperties } from "./ServiceObjects";
 import { URLs } from "./URLs";
 
-export async function executeDrive(
-  methodName: string,
-  properties: SingleRecord,
-  parameters: SingleRecord
-) {
+export async function executeDrive(methodName: string) {
   switch (methodName) {
     case DriveMethods.getDrives:
       await executeGetDrives();

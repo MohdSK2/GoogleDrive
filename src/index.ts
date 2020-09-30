@@ -27,10 +27,10 @@ onexecute = async function ({
       await executeFile(methodName, properties, parameters);
       break;
     case "Drive":
-      await executeDrive(methodName, properties, parameters);
+      await executeDrive(methodName);
       break;
     case "Folder":
-      await executeFolder(methodName, properties, parameters);
+      await executeFolder(methodName, properties, configuration);
       break;
     default:
       throw new Error("The object " + objectName + " is not supported.");
