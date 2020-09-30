@@ -11,7 +11,7 @@ const PropertyTypes = {
   DATE: "extendedDateTime",
   GUID: "guid",
   AUTOGUID: "guid",
-  HYPERLINK: "object",
+  //HYPERLINK: "object",
   IMAGE: "image",
   MEMO: "extendedString",
   MULTIVALUE: "object",
@@ -141,7 +141,7 @@ export const ServiceObjectDefinitions = {
         [FolderProperties.url]: {
           displayName: "URL",
           description: "Direct URL to the item.",
-          type: PropertyTypes.HYPERLINK, // TODO: does that work?
+          type: PropertyTypes.STRING,
         },
         [FolderProperties.modifiedDate]: {
           displayName: "Modified DateTime",
@@ -241,7 +241,7 @@ export const ServiceObjectDefinitions = {
         [FileProperties.url]: {
           displayName: "URL",
           description: "Direct URL to the file.",
-          type: PropertyTypes.HYPERLINK, //TODO: does that work?
+          type: PropertyTypes.STRING,
         },
         [FileProperties.fileContent]: {
           displayName: "File",
