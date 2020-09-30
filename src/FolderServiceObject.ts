@@ -51,6 +51,7 @@ async function executeGetList(
 
 async function GetFolderContent(
   folderId: string,
+  showTrashed: boolean,
   nextPageToken?: string,
   current = []
 ) {

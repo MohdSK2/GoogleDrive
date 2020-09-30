@@ -218,11 +218,52 @@ test("Execute Folder -> GetList", async (t) => {
     methodName: "getlist",
     parameters: undefined,
     properties: { id: "root" },
+    configuration: { ShowTrashed: false },
+    schema: undefined,
+  });
+
+  t.assert(result.length >= 1);
+  t.assert(typeof result[0].tags === "string");
+  t.assert(result.find((x) => x.trashed == true) === undefined);
+
+  result = null;
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getlist",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: { ShowTrashed: true },
+    schema: undefined,
+  });
+
+  t.assert(result.length >= 1);
+  t.assert(typeof result[0].tags === "string");
+  t.assert(result.find((x) => x.trashed == true) !== undefined);
+});
+
+test("Execute Folder -> GetList on shared drive", async (t) => {
+  await onexecute({
+    objectName: "Drive",
+    methodName: "GetDrives",
+    parameters: undefined,
+    properties: undefined,
     configuration: undefined,
     schema: undefined,
   });
 
-  t.plan(1);
+  var drive = result.find((x) => x.id != "root");
+  if (drive === undefined) {
+    t.fail("You need to create a shared Drive for this test to work.");
+  }
+
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getlist",
+    parameters: undefined,
+    properties: { id: drive.id },
+    configuration: { ShowTrashed: true },
+    schema: undefined,
+  });
+
   t.assert(result.length >= 1);
-  console.log(result);
 });

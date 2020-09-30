@@ -8,6 +8,14 @@ metadata = {
   systemName: "googledriveJSSPbroker",
   displayName: "Google Drive JSSP Broker",
   description: "JSSP Broker to utilize Google Drive functionality.",
+  configuration: {
+    ShowTrashed: {
+      displayName: "Show trashed items in return set.",
+      type: "boolean",
+      value: "false",
+      required: true,
+    },
+  },
 };
 
 ondescribe = async function ({ configuration }): Promise<void> {
