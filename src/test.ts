@@ -6,7 +6,7 @@ import "./index";
 
 //TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
 let OAuthToken =
-  "ya29.a0AfH6SMDsftts7HSE96ahoqUOdl-gNxDFljTQHNGNbBsm0bJfpWzu63f9Y6lUVxKfI5HcdULOp8DXjbz3CG_aV7xLG1rvZ78D5L6af9sakTafBFQhXVjKHWrh6OkYeOHnZl3KsFXqYLCQHbJrIJgNQSaa0t8vpSA0iyneQA";
+  "ya29.a0AfH6SMCtRIKlq1u4tnNYveFz4-DpM3OSkxGg3S9g40F2CY4sOZ-AJchVooBWYWptsQhltG1U00NmhndTwl1QqZI4ptZsgcS5nYpDhwgb0PWEA5VugSFsYbecZPruItEF-yN5N2HNTtukSlJS9Xi6GkeBOZ5JQTFj_nB3CA";
 
 function mock(name: string, value: any) {
   global[name] = value;
@@ -15,8 +15,8 @@ function mock(name: string, value: any) {
 let result: any = null;
 mock("postResult", function (r: any) {
   result = r;
-  console.log("postResult:");
-  console.log(result);
+  //console.log("postResult:");
+  //console.log(result);
 });
 
 let xhr: { [key: string]: any } = null;
