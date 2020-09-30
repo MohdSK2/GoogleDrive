@@ -196,10 +196,11 @@ export const ServiceObjectDefinitions = {
             FolderProperties.name,
             FolderProperties.parentId,
             FolderProperties.tags,
-            FolderProperties.size,
             FolderProperties.modifiedDate,
             FolderProperties.createdDate,
             FolderProperties.url,
+            FolderProperties.description,
+            FolderProperties.istrashed,
           ],
         },
         [FolderMethods.getList]: {

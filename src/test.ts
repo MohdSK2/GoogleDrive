@@ -267,3 +267,18 @@ test("Execute Folder -> GetList on shared drive", async (t) => {
 
   t.assert(result.length >= 1);
 });
+
+test("Execute Folder -> GetInfo", async (t) => {
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  t.plan(2);
+  t.assert(result.foldername === "My Drive");
+  t.assert(result.ParentId === undefined);
+});
