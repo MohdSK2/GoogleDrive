@@ -209,7 +209,7 @@ test("Execute Drive -> GetDrives", async (t) => {
 
   t.plan(2);
   t.assert(result.length >= 1);
-  t.assert(result.find((x) => (x.id = "root")) !== undefined);
+  t.assert(result.find((x) => x.id == "root") !== undefined);
 });
 
 test("Execute Folder -> GetList", async (t) => {

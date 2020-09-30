@@ -8,38 +8,41 @@ import { isFolder } from "./GoogleMimeTypes";
 export async function executeFolder(
   methodName: string,
   properties: SingleRecord,
-  parameters: SingleRecord
+  configuration: SingleRecord
 ) {
   switch (methodName) {
     case FolderMethods.getList:
-      await executeGetList(properties);
+      await executeGetList(properties, configuration);
       break;
     default:
       throw new Error(`The method ${methodName} is not supported.`);
   }
 }
 
-async function executeGetList(properties: SingleRecord) {
+async function executeGetList(
+  properties: SingleRecord,
+  configuration: SingleRecord
+) {
   if (typeof properties[FolderProperties.id] !== "string") {
     throw new Error(`properties[${FolderProperties.id}] is not of type number`);
   }
+  const showTrashed = await getBoolean(configuration["ShowTrashed"]);
+  const folderId = properties[FolderProperties.id] as string;
 
-  var folderId = properties[FolderProperties.id] as string;
-
-  const allItems = await GetFolderContent(folderId);
+  const allItems = await GetFolderContent(folderId, showTrashed);
   postResult(
     allItems.map((x) => {
       return {
         [FolderProperties.id]: x.id,
         [FolderProperties.name]: x.name,
         [FolderProperties.description]: x.description ? x.description : "",
-        [FolderProperties.tags]: x.properties,
+        [FolderProperties.tags]: JSON.stringify(x.properties),
         [FolderProperties.size]: x.size ? x.size : 0,
         [FolderProperties.istrashed]: x.trashed,
         [FolderProperties.isdirectory]: isFolder(x.mimeType),
         [FolderProperties.mimetype]: x.mimeType,
-        [FolderProperties.modifiedDate]: x.modifiedTime,
-        [FolderProperties.createdDate]: x.createdTime,
+        [FolderProperties.modifiedDate]: new Date(x.modifiedTime),
+        [FolderProperties.createdDate]: new Date(x.createdTime),
         [FolderProperties.url]: x.webViewLink,
       };
     })
@@ -60,12 +63,15 @@ async function GetFolderContent(
     supportsAllDrives: true,
     includeItemsFromAllDrives: true,
   };
+  if (!showTrashed) {
+    qs.q = qs.q + " and trashed = false";
+  }
   const res = await fetch_get(URLs.Files, qs);
   const jsonRes = JSON.parse(res);
   current.push(...jsonRes.files);
   const token = jsonRes.nextPageToken;
   if (token) {
-    return await GetFolderContent(folderId, token, current);
+    return await GetFolderContent(folderId, showTrashed, token, current);
   }
   return current;
 }
