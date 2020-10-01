@@ -7,8 +7,7 @@ import { getBoolean, isFolder } from "./helpers";
 import { MimeTypes } from "./GoogleMimeTypes";
 
 //TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
-let OAuthToken =
-  "ya29.a0AfH6SMCtRIKlq1u4tnNYveFz4-DpM3OSkxGg3S9g40F2CY4sOZ-AJchVooBWYWptsQhltG1U00NmhndTwl1QqZI4ptZsgcS5nYpDhwgb0PWEA5VugSFsYbecZPruItEF-yN5N2HNTtukSlJS9Xi6GkeBOZ5JQTFj_nB3CA";
+let OAuthToken = "Changeme";
 
 function mock(name: string, value: any) {
   global[name] = value;
