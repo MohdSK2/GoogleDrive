@@ -106,9 +106,14 @@ async function GetFolderInfo(folderId: string) {
     fields:
       "id,name,description,properties,trashed,mimeType,modifiedTime,createdTime,webViewLink,parents",
     supportsAllDrives: true,
-    q: `mimeType = '${MimeTypes.GoogleDriveFolder}'`,
   };
   const url = URLs.Files + "/" + folderId;
   const res = await fetch_get(url, qs);
-  return JSON.parse(res);
+  const ret = JSON.parse(res);
+  if (!isFolder(ret.mimeType)) {
+    throw new Error(
+      `Item with ID '${folderId}' is not a folder. It's of type: ${ret.mimeType}`
+    );
+  }
+  return ret;
 }

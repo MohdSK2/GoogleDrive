@@ -334,3 +334,46 @@ test("Execute Folder -> GetInfo - folder within root", async (t) => {
   //t.is(result.ParentId, rootId);  https://github.com/k2workflow/GoogleDrive/issues/25
   t.is(result.trashed, false);
 });
+
+test("Execute Folder -> GetInfo - try file within root", async (t) => {
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  const rootId = result.id;
+
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getlist",
+    parameters: undefined,
+    properties: { id: rootId },
+    configuration: { ShowTrashed: false },
+    schema: undefined,
+  });
+
+  var fileInRoot = result.find((x) => x.dir == false);
+
+  let error = await t.throwsAsync(
+    Promise.resolve<void>(
+      onexecute({
+        objectName: "Folder",
+        methodName: "getinfo",
+        parameters: undefined,
+        properties: { id: fileInRoot.id },
+        configuration: undefined,
+        schema: undefined,
+      })
+    )
+  );
+
+  t.assert(
+    error.message.startsWith(
+      `Item with ID '${fileInRoot.id}' is not a folder. It's of type:`
+    )
+  );
+});
