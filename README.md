@@ -103,7 +103,6 @@ The above commands will likely cause issues the first time you run them, that ha
 
 - We use integration tests, so we'll actually perform operations on a real Google Drive.
 - Google drive uses Oauth, and at this time the OAuth token needs to be entered in a variable in the `test.ts` file. You can get this OAuth token [easily from PostMan](https://stackoverflow.com/questions/32076503/using-postman-to-access-oauth-2-0-google-apis).
--
 
 The requirements for the google drive are as followed:
 
