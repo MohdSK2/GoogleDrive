@@ -15,22 +15,6 @@ npm install
 See the documentation for [@k2oss/k2-broker-core](https://www.npmjs.com/package/@k2oss/k2-broker-core)
 for more information about how to use the broker SDK package.
 
-### Running Unit Tests
-
-To run the unit tests, run:
-
-```bash
-npm test
-```
-
-You can also use a development build, for debugging and coverage gutters:
-
-```bash
-npm run test:dev
-```
-
-You will find the code coverage results in [coverage/index.html](./coverage/index.html).
-
 ### Building your bundled JS
 
 When you're ready to build your broker, run the following command
@@ -40,6 +24,8 @@ npm run build
 ```
 
 You will find the results in the [dist/index.js](./dist/index.js).
+
+> For notes on testing, please see the Testing section below.
 
 ### Creating a service type
 
@@ -90,3 +76,36 @@ We tend to use VS code. The `.vscode` folder already indicated that. Furthermore
 ## License
 
 MIT, found in the [LICENSE](./LICENSE) file.
+
+## Testing
+
+The source code has a set of tests that need to be 100% successful before we allow code to enter the `master` branch.
+
+### Running Tests
+
+To run the unit tests, run:
+
+```bash
+npm test
+```
+
+You can also use a development build, for debugging and coverage gutters:
+
+```bash
+npm run test:dev
+```
+
+You will find the code coverage results in [coverage/index.html](./coverage/index.html).
+
+### Integration test
+
+The above commands will likely cause issues the first time you run them, that has two reasons
+
+- We use integration tests, so we'll actually perform operations on a real Google Drive.
+- Google drive uses Oauth, and at this time the OAuth token needs to be entered in a variable in the `test.ts` file. You can get this OAuth token [easily from PostMan](https://stackoverflow.com/questions/32076503/using-postman-to-access-oauth-2-0-google-apis).
+-
+
+The requirements for the google drive are as followed:
+
+- There needs to be at least one Shared Drive
+- Both MyDrive and Shared Drive should have at least one file and one folder.
