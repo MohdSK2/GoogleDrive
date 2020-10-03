@@ -38,6 +38,6 @@ async function GetDrives(nextPageToken?: string, current = []) {
   if (token) {
     return await GetDrives(token, current);
   }
-  current.push({ name: "MyDrive", id: "root" }); // push in the MyDrive that everybody has.
+  current.push({ name: "My Drive", id: "root" }); // push in the MyDrive that everybody has.
   return current;
 }
