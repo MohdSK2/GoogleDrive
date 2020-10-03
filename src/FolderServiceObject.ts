@@ -4,6 +4,7 @@ import { getBoolean } from "./helpers";
 import { FolderProperties, FolderMethods } from "./ServiceObjects";
 import { URLs } from "./URLs";
 import { isFolder } from "./helpers";
+import { MimeTypes } from "./GoogleMimeTypes";
 
 export async function executeFolder(
   methodName: string,
@@ -105,6 +106,7 @@ async function GetFolderInfo(folderId: string) {
     fields:
       "id,name,description,properties,trashed,mimeType,modifiedTime,createdTime,webViewLink,parents",
     supportsAllDrives: true,
+    q: `mimeType = '${MimeTypes.GoogleDriveFolder}'`,
   };
   const url = URLs.Files + "/" + folderId;
   const res = await fetch_get(url, qs);
