@@ -284,7 +284,7 @@ test("Execute Folder -> GetList on shared drive", async (t) => {
   t.assert(result.length >= 1);
 });
 
-test("Execute Folder -> GetInfo", async (t) => {
+test("Execute Folder -> GetInfo - root", async (t) => {
   await onexecute({
     objectName: "Folder",
     methodName: "getinfo",
@@ -294,7 +294,43 @@ test("Execute Folder -> GetInfo", async (t) => {
     schema: undefined,
   });
 
-  t.plan(2);
-  t.assert(result.foldername === "My Drive");
-  t.assert(result.ParentId === undefined);
+  t.is(result.foldername, "My Drive");
+  t.is(result.ParentId, undefined);
+  t.is(result.trashed, false);
+});
+
+test("Execute Folder -> GetInfo - folder within root", async (t) => {
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  const rootId = result.id;
+
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getlist",
+    parameters: undefined,
+    properties: { id: rootId },
+    configuration: { ShowTrashed: false },
+    schema: undefined,
+  });
+
+  var otherFolder = result.find((x) => x.dir == true);
+
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: otherFolder.id },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  //t.is(result.ParentId, rootId);  https://github.com/k2workflow/GoogleDrive/issues/25
+  t.is(result.trashed, false);
 });
