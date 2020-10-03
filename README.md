@@ -65,7 +65,7 @@ If you're lucky enough to be able to add functionality yourself, or fix an issue
 - Make a pull request with a clear title. "Fix #1233" is not clear.
 - Describe what the fix/feature does.
 - Make sure any documentation is updated.
-- Make sure there is a test for new functionality. We will reject new service object methods that do not have a test.
+- Make sure there is a test for new functionality. We will reject new service object methods that do not have a test. Also, see Testing below.
 - Create the pull request against the master branch.
 - If you fix an issue, then please include "Closed #XXX" in the message.
 
