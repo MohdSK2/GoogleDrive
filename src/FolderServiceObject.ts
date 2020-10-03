@@ -3,8 +3,7 @@ import { fetch_get } from "./fetch";
 import { getBoolean } from "./helpers";
 import { FolderProperties, FolderMethods } from "./ServiceObjects";
 import { URLs } from "./URLs";
-import { isFolder } from "./helpers";
-import { MimeTypes } from "./GoogleMimeTypes";
+import { isFolder, getSingleParent } from "./helpers";
 
 export async function executeFolder(
   methodName: string,
@@ -91,7 +90,7 @@ async function executeGetInfo(properties: SingleRecord) {
   postResult({
     [FolderProperties.id]: x.id,
     [FolderProperties.name]: x.name,
-    [FolderProperties.parentId]: JSON.stringify(x.parents),
+    [FolderProperties.parentId]: getSingleParent(x.parents),
     [FolderProperties.tags]: JSON.stringify(x.properties),
     [FolderProperties.modifiedDate]: new Date(x.modifiedTime),
     [FolderProperties.createdDate]: new Date(x.createdTime),
