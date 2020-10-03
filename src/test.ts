@@ -3,10 +3,11 @@ import "@k2oss/k2-broker-core/test-framework";
 import { fetch_get } from "./fetch";
 import { ServiceObjectDefinitions } from "./ServiceObjects";
 import "./index";
+import { getBoolean, isFolder } from "./helpers";
+import { MimeTypes } from "./GoogleMimeTypes";
 
 //TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
-let OAuthToken =
-  "ya29.a0AfH6SMCtRIKlq1u4tnNYveFz4-DpM3OSkxGg3S9g40F2CY4sOZ-AJchVooBWYWptsQhltG1U00NmhndTwl1QqZI4ptZsgcS5nYpDhwgb0PWEA5VugSFsYbecZPruItEF-yN5N2HNTtukSlJS9Xi6GkeBOZ5JQTFj_nB3CA";
+let OAuthToken = "Changeme";
 
 function mock(name: string, value: any) {
   global[name] = value;
@@ -98,6 +99,21 @@ test("fetch_get - 404 failure", async (t) => {
       t.pass();
       console.log(err);
     });
+});
+
+test("Helper -> getBoolean", async (t) => {
+  t.is(getBoolean(1), true);
+  t.is(getBoolean("yes"), true);
+  t.is(getBoolean("true"), true);
+  t.is(getBoolean("1"), true);
+  t.is(getBoolean(0), false);
+  t.is(getBoolean("0"), false);
+});
+
+test("Helper -> isFolder", async (t) => {
+  t.is(isFolder(undefined), false);
+  t.is(isFolder(MimeTypes.GoogleDriveFolder), true);
+  t.is(isFolder(MimeTypes.GoogleDriveFile), false);
 });
 
 test("Describe returns the hardcoded instance", async (t) => {
@@ -266,4 +282,98 @@ test("Execute Folder -> GetList on shared drive", async (t) => {
   });
 
   t.assert(result.length >= 1);
+});
+
+test("Execute Folder -> GetInfo - root", async (t) => {
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  t.is(result.foldername, "My Drive");
+  t.is(result.ParentId, undefined);
+  t.is(result.trashed, false);
+});
+
+test("Execute Folder -> GetInfo - folder within root", async (t) => {
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  const rootId = result.id;
+
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getlist",
+    parameters: undefined,
+    properties: { id: rootId },
+    configuration: { ShowTrashed: false },
+    schema: undefined,
+  });
+
+  var otherFolder = result.find((x) => x.dir == true);
+
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: otherFolder.id },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  //t.is(result.ParentId, rootId);  https://github.com/k2workflow/GoogleDrive/issues/25
+  t.is(result.trashed, false);
+});
+
+test("Execute Folder -> GetInfo - try file within root", async (t) => {
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getinfo",
+    parameters: undefined,
+    properties: { id: "root" },
+    configuration: undefined,
+    schema: undefined,
+  });
+
+  const rootId = result.id;
+
+  await onexecute({
+    objectName: "Folder",
+    methodName: "getlist",
+    parameters: undefined,
+    properties: { id: rootId },
+    configuration: { ShowTrashed: false },
+    schema: undefined,
+  });
+
+  var fileInRoot = result.find((x) => x.dir == false);
+
+  let error = await t.throwsAsync(
+    Promise.resolve<void>(
+      onexecute({
+        objectName: "Folder",
+        methodName: "getinfo",
+        parameters: undefined,
+        properties: { id: fileInRoot.id },
+        configuration: undefined,
+        schema: undefined,
+      })
+    )
+  );
+
+  t.assert(
+    error.message.startsWith(
+      `Item with ID '${fileInRoot.id}' is not a folder. It's of type:`
+    )
+  );
 });

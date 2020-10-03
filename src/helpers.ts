@@ -1,6 +1,7 @@
 // General easy functions/methods to have.
+import { MimeTypes } from "./GoogleMimeTypes";
 
-export async function getBoolean(value) {
+export function getBoolean(value) {
   switch (value) {
     case true:
     case "true":
@@ -12,4 +13,14 @@ export async function getBoolean(value) {
     default:
       return false;
   }
+}
+
+export function isFolder(mimeType: string) {
+  if (mimeType === undefined) {
+    return false;
+  }
+  if (mimeType === MimeTypes.GoogleDriveFolder) {
+    return true;
+  }
+  return false;
 }
