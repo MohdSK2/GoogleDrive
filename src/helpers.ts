@@ -24,3 +24,14 @@ export function isFolder(mimeType: string) {
   }
   return false;
 }
+
+export function getSingleParent(parent: [string]) {
+  if (parent === undefined) {
+    return undefined;
+  }
+  if (!Array.isArray(parent)) {
+    return undefined;
+  }
+
+  return parent[0];
+}

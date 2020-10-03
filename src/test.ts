@@ -7,7 +7,7 @@ import { getBoolean, isFolder } from "./helpers";
 import { MimeTypes } from "./GoogleMimeTypes";
 
 //TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
-let OAuthToken = "Changeme";
+let OAuthToken = "changeme";
 
 function mock(name: string, value: any) {
   global[name] = value;
@@ -331,7 +331,7 @@ test("Execute Folder -> GetInfo - folder within root", async (t) => {
     schema: undefined,
   });
 
-  //t.is(result.ParentId, rootId);  https://github.com/k2workflow/GoogleDrive/issues/25
+  t.is(result.ParentId, rootId);
   t.is(result.trashed, false);
 });
 
