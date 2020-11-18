@@ -28,7 +28,6 @@ async function OnExecuteGetInfo(
     URLs.Files + "/" + properties[FileProperties.id] + "?fields=*"
   );
   let FileDetails = JSON.parse(res);
-  var URL = GetFileURL(FileDetails);
   postResult({
     [FileProperties.id]: FileDetails.id,
     [FileProperties.name]: FileDetails.name,
@@ -37,7 +36,7 @@ async function OnExecuteGetInfo(
     [FileProperties.modifiedDate]: new Date(FileDetails.modifiedTime),
     [FileProperties.createdDate]: new Date(FileDetails.createdTime),
     [FileProperties.totrash]: FileDetails.trashed,
-    [FileProperties.url]: URL,
+    [FileProperties.url]: FileDetails.webViewLink,
   });
 }
 
@@ -61,53 +60,4 @@ async function OnExecuteDeleteFile(
   } else {
     res = await fetch_delete(URLs.Files + "/" + properties[FileProperties.id]);
   }
-}
-
-function GetFileURL(FileDetails) {
-  var wordDocTypeKey =
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-  var keyValue = "";
-  var fileMimeType = FileDetails.mimeType;
-
-  switch (GetFileType(fileMimeType)) {
-    case "Word": {
-      Object.keys(FileDetails.exportLinks).forEach(function (key) {
-        if (key == wordDocTypeKey) {
-          keyValue = FileDetails.exportLinks[key];
-        }
-      });
-      break;
-    }
-    case "Excel": {
-      keyValue = FileDetails.webContentLink;
-      break;
-    }
-    case "Invalid": {
-      keyValue = "Sorry, This file type is not configured yet!";
-      break;
-    }
-    default: {
-      keyValue = "";
-      break;
-    }
-  }
-
-  return keyValue;
-}
-
-function GetFileType(fileMimeType: string) {
-  var fileType = "";
-  if (fileMimeType.indexOf("vnd.google-apps.document") > 0) {
-    fileType = "Word";
-  } else if (
-    fileMimeType.indexOf(
-      "vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    ) > 0
-  ) {
-    fileType = "Excel";
-    console.log("Inside excel condition");
-  } else {
-    fileType = "Invalid";
-  }
-  return fileType;
 }
