@@ -24,8 +24,15 @@ async function OnExecuteGetInfo(
   properties: SingleRecord,
   parameters: SingleRecord
 ) {
+  let qs = {
+    fields:
+      "id,name,description,properties,trashed,mimeType,modifiedTime,createdTime,webViewLink,parents",
+    supportsAllDrives: true,
+  };
+
   let res = await fetch_get(
-    URLs.Files + "/" + properties[FileProperties.id] + "?fields=*"
+    URLs.Files + "/" + properties[FileProperties.id],
+    qs
   );
   let FileDetails = JSON.parse(res);
   postResult({

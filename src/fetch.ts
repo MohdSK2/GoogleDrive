@@ -61,19 +61,19 @@ export async function fetch_patch(
           return;
         }
         if (xhr.status !== 200) {
-          throw new Error(`FETCH_GET - Failed with status ${xhr.status}`);
+          throw new Error(`FETCH_PATCH - Failed with status ${xhr.status}`);
         }
         resolve(xhr.responseText);
       } catch (e) {
         console.log(
-          `FETCH_GET - error: ${e}; ResponseText: ${xhr.responseText}`
+          `FETCH_PATCH - error: ${e}; ResponseText: ${xhr.responseText}`
         );
         reject(e);
       }
     };
     xhr.onerror = function () {
-      console.log(`FETCH_GET - onError occured`);
-      throw new Error(`FETCH_GET - onError occured`);
+      console.log(`FETCH_PATCH - onError occured`);
+      throw new Error(`FETCH_PATCH - onError occured`);
     };
 
     // This can probably be better
