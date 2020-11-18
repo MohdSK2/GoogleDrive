@@ -7,7 +7,8 @@ import { getBoolean, isFolder } from "./helpers";
 import { MimeTypes } from "./GoogleMimeTypes";
 
 //TODO: You must update this value to be able to run tests against the google drive API. Copy it from Postman or so. Google OAuth tokens expire in 1 hour.
-let OAuthToken = "changeme";
+let OAuthToken =
+  "ya29.a0AfH6SMBQeVesDYMMd25jqq3bO9zrI5vsHGXsTAAw0xIzxcQEnUzg7ecVS4h3lv5m_dCAJaPS7RUMZ7UPh_c4H6BoJom7zBjK6oZHDFPrGeyUKhxN_ZgOZEL38MTLdyDHyP57ObIXwISI1ymNDeaYkdGx6oPTCJWzK2FP7XjjsW0uy5mdhw";
 
 function mock(name: string, value: any) {
   global[name] = value;
@@ -156,6 +157,7 @@ test("ServiceObject not supported", async (t) => {
 
 test("Service Object method not supported", async (t) => {
   let nonexistingMethod = "SomeMethod";
+
   let error = await t.throwsAsync(
     Promise.resolve<void>(
       onexecute({
@@ -376,4 +378,22 @@ test("Execute Folder -> GetInfo - try file within root", async (t) => {
       `Item with ID '${fileInRoot.id}' is not a folder. It's of type:`
     )
   );
+});
+
+test("Execute File -> GetInfo - try get file information", async (t) => {
+  let error = await t.throwsAsync(
+    Promise.resolve<void>(
+      onexecute({
+        objectName: "File",
+        methodName: "getinfo",
+        parameters: undefined,
+        properties: { id: "1PzF6oqLW3GF7Wi9veoiNE_WVPh0pmNM2" },
+        configuration: undefined,
+        schema: undefined,
+      })
+    )
+  );
+
+  t.is(result.id, "result");
+  t.assert(error.message.startsWith(`Incorrect syntax`));
 });

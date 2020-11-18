@@ -44,6 +44,8 @@ export const FileProperties = {
   sourceId: "sourceid",
   targetid: "targetid",
   totrash: "totrash",
+  description: "description",
+  result: "result",
 };
 
 export const FolderMethods = {
@@ -302,6 +304,21 @@ export const ServiceObjectDefinitions = {
             "Indicate if the file should go to the trash folder or be deleted permanently.",
           type: PropertyTypes.BOOL,
         },
+        [FileProperties.description]: {
+          displayName: "File Description",
+          description: "File description",
+          type: PropertyTypes.MEMO,
+        },
+        [FileProperties.description]: {
+          displayName: "File Description",
+          description: "File description",
+          type: PropertyTypes.MEMO,
+        },
+        [FileProperties.result]: {
+          displayName: "Result",
+          description: "Result",
+          type: PropertyTypes.BOOL,
+        },
       },
       methods: {
         [FileMethods.getInfo]: {
@@ -315,10 +332,11 @@ export const ServiceObjectDefinitions = {
             FileProperties.name,
             FileProperties.parentId,
             FileProperties.tags,
-            FileProperties.size,
             FileProperties.modifiedDate,
             FileProperties.createdDate,
             FileProperties.url,
+            FileProperties.description,
+            FileProperties.totrash,
           ],
         },
 
@@ -363,7 +381,7 @@ export const ServiceObjectDefinitions = {
           type: MethodTypes.DELETE,
           inputs: [FileProperties.id, FileProperties.totrash],
           requiredInputs: [FileProperties.id],
-          outputs: [],
+          outputs: [FileProperties.result],
         },
         /* [FileMethods.move]: {
           displayName: "Move File",
